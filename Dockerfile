@@ -28,7 +28,7 @@ RUN wget https://releases.hashicorp.com/terraform/1.8.5/terraform_1.8.5_linux_am
     rm terraform_1.8.5_linux_amd64.zip
 
 # Terragrunt
-RUN wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.56.7/terragrunt_linux_amd64 && \
+RUN wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.57.6/terragrunt_linux_amd64 && \
     mv terragrunt_linux_amd64 /usr/local/bin/terragrunt && \
     chmod +x /usr/local/bin/terragrunt
 
