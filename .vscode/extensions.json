@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "github.copilot",
+    "hashicorp.terraform",
+    "redhat.ansible",
+    "ms-python.python",
+    "enkia.tokyo-night",
+    "esbenp.prettier-vscode"
+  ],
+  "unwantedRecommendations": [
+    "ms-azuretools.vscode-docker"
+  ]
+}
