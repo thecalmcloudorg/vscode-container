@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -14,7 +14,8 @@ RUN apt-get update && \
       python3-venv \
       software-properties-common \
       gnupg2 \
-      lsb-release
+      lsb-release \
+      openssh-client
 
 # Node.js (LTS)
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
@@ -41,9 +42,31 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 RUN apt-get update && \
     apt-get install -y ansible
 
+# Black (Python formatter)
+RUN pip3 install --upgrade pip && pip3 install black
+
 # Crea usuario vscode
 RUN useradd -ms /bin/bash vscode && \
     echo "vscode ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 USER vscode
 WORKDIR /home/vscode
+
+# Copia el commit template al home de vscode
+COPY .gitcommittemplate /home/vscode/.gitcommittemplate
+
+# Script de configuración inicial para usuario vscode
+RUN echo '#!/bin/bash\n\
+if [ ! -f ~/.ssh/id_rsa ]; then\n\
+  mkdir -p ~/.ssh\n\
+  ssh-keygen -t rsa -b 4096 -C "vscode@devcontainer" -N "" -f ~/.ssh/id_rsa\n\
+  eval "$(ssh-agent -s)"\n\
+  ssh-add ~/.ssh/id_rsa\n\
+  echo "SSH key generated in ~/.ssh/id_rsa"\n\
+fi\n\
+git config --global user.name "VSCode Dev"\n\
+git config --global user.email "vscode@devcontainer"\n\
+git config --global commit.template ~/.gitcommittemplate\n\
+' > /home/vscode/bootstrap.sh && \
+    chmod +x /home/vscode/bootstrap.sh && \
+    echo "[ -f ~/bootstrap.sh ] && bash ~/bootstrap.sh" >> /home/vscode/.bashrc
