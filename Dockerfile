@@ -42,9 +42,6 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 RUN apt-get update && \
     apt-get install -y ansible
 
-# Black (Python formatter)
-RUN pip3 install --upgrade pip && pip3 install black
-
 # Crea usuario vscode
 RUN useradd -ms /bin/bash vscode && \
     echo "vscode ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
