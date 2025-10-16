@@ -1,0 +1,53 @@
+{
+  "name": "vscode",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "github.copilot",
+        "hashicorp.terraform",
+        "redhat.ansible",
+        "ms-python.python",
+        "enkia.tokyo-night",
+        "esbenp.prettier-vscode"
+      ],
+      "settings": {
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "python.formatting.provider": "black",
+        "editor.formatOnSave": true,
+        "editor.minimap.enabled": false,
+        "workbench.colorTheme": "Tokyo Night",
+        "window.commandCenter": false,
+        "editor.lineNumbers": "on",
+        "editor.stickyScroll.enabled": false,
+        "files.autoSave": "onWindowChange",
+        "workbench.editorAssociations": {
+          "*.md": "vscode.markdown.preview.editor",
+          "*.MD": "vscode.markdown.preview.editor"
+        },
+        "workbench.sideBar.location": "left",
+        "workbench.statusBar.visible": true,
+        "workbench.tree.enableStickyScroll": true,
+        "workbench.view.alwaysShowHeaderActions": false,
+        "window.density.editorTabHeight": "default",
+        "git.autofetch": false,
+        "git.enableSmartCommit": true,
+        "git.postCommitCommand": "sync",
+        "ansible.python.interpreterPath": "/usr/bin/python3",
+        "ansible.validation.lint.enabled": true,
+        "extensions.unwantedRecommendations": ["ms-azuretools.vscode-docker"],
+        "files.exclude": {
+          "**/.devcontainer": true,
+          "README.md": true,
+          ".prettierrc": true
+        }
+      }
+    }
+  },
+  "postCreateCommand": "chmod +x .devcontainer/postCreateCommand.sh && .devcontainer/postCreateCommand.sh"
+}
